@@ -11,22 +11,12 @@ repositories {
 
 dependencies {
     compile group: 'org.apache.pulsar', name: 'pulsar-spark', version: '2.0.0-rc1-incubating'
-    compile group: 'org.apache.spark', name: 'spark-core_2.11', version: '2.3.1'
-    compile group: 'org.apache.spark', name: 'spark-sql_2.11', version: '2.3.1'
-//    compile group: 'org.scala-lang', name: 'scala-library', version: '2.11'
-//    compile (group: "org.apache.spark", name: "spark-streaming_2.11", version: "2.3.1"){
-//        exclude group:"com.fasterxml.jackson.core"
-//    }
+    compile group: 'org.apache.spark', name: 'spark-core_2.11', version: '2.2.1'
+    compile group: 'org.apache.spark', name: 'spark-sql_2.11', version: '2.2.1'
+    compile (group: "org.apache.spark", name: "spark-streaming_2.11", version: "2.2.1")
 
 
-    compile group: 'org.apache.spark', name: 'spark-streaming_2.11', version: '2.3.1'
     compile group: 'junit', name: 'junit', version: '4.12'
-
     compile group: 'org.eclipse.jetty', name: 'jetty-server', version: '9.3.11.v20160721'
-    //compile group: 'com.google.collections', name: 'google-collections', version: '1.0'
     compile group: 'com.google.guava', name: 'guava', version: '23.0'
-    compile group: 'com.fasterxml.jackson.core', name: 'jackson-core', version: '2.3.1'
-//    compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.3.1'
-//    compile group: 'com.fasterxml.jackson.core', name: 'jackson-module-scala_2.10', version: '2.2.2'
-//    compile group: 'org.scala-lang', name: 'scala-library', version: '2.11.8'
 }

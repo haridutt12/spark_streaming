@@ -48,28 +48,28 @@ public class Consumer {
         JavaDStream<Integer> numOfPulsar = isContainingPulsar.reduce((Function2<Integer, Integer, Integer>) (i1, i2) -> i1 + i2);
         numOfPulsar.print();
 
-
-        /*numOfPulsar.foreachRDD(new VoidFunction<JavaRDD<Integer>>() {
-            @Override
-            public void call(JavaRDD<Integer> rdd) {
-                JavaRDD<Row> rowRDD = rdd.map(new Function<Integer, Row>() {
-                    @Override
-                    public Row call(Integer msg) {
-                        Row row = (Row) RowFactory.create(msg);
-                        return row;
-                    }
-                });
-
-                //Create Schema
-                StructType schema = DataTypes.createStructType(new StructField[] {DataTypes.createStructField("Message", DataTypes.StringType, true)});
-
-                //Get Spark 2.0 session
-                SparkSession spark = JavaSparkSessionSingleton.getInstance(rdd.context().getConf());
-
-                Dataset<Row> msgDataFrame = spark.createDataFrame(rowRDD, Message.class);
-                msgDataFrame.show();
-            }
-        });*/
+//
+//        numOfPulsar.foreachRDD(new VoidFunction<JavaRDD<Integer>>() {
+//            @Override
+//            public void call(JavaRDD<Integer> rdd) {
+//                JavaRDD<Row> rowRDD = rdd.map(new Function<Integer, Row>() {
+//                    @Override
+//                    public Row call(Integer msg) {
+//                        Row row = (Row) RowFactory.create(msg);
+//                        return row;
+//                    }
+//                });
+//
+//                //Create Schema
+//                StructType schema = DataTypes.createStructType(new StructField[] {DataTypes.createStructField("Message", DataTypes.StringType, true)});
+//
+//                //Get Spark 2.0 session
+//                SparkSession spark = JavaSparkSessionSingleton.getInstance(rdd.context().getConf());
+//
+//                Dataset<Row> msgDataFrame = spark.createDataFrame(rowRDD, Message.class);
+//                msgDataFrame.show();
+//            }
+//        });
 
 
         jssc.start();
