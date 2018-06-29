@@ -26,10 +26,12 @@ import java.util.List;
 public class Consumer {
 
     public static void main(String[] args)  throws InterruptedException {
-
+        //SparkConf that loads defaults from system properties and the classpath
         SparkConf conf = new SparkConf().setMaster("local[*]").setAppName("pulsar-spark");
 
-     JavaStreamingContext jssc = new JavaStreamingContext(conf, Durations.seconds(5));
+        //A Java-friendly version of StreamingContext which is the main entry point for Spark Streaming functionality.
+        // It provides methods to create JavaDStream and JavaPairDStream from input sources
+        JavaStreamingContext jssc = new JavaStreamingContext(conf, Durations.seconds(5));
 
         ClientConfiguration clientConf = new ClientConfiguration();
         ConsumerConfiguration consConf = new ConsumerConfiguration();
@@ -37,8 +39,11 @@ public class Consumer {
         String topic = "persistent://sample/standalone/ns1/my-topic";
         String subs = "sub1";
 
+        //the abstract class for defining any input stream that receives data over the network
         JavaReceiverInputDStream<byte[]> msgs = jssc.receiverStream(new SparkStreamingPulsarReceiver(clientConf, consConf, url, topic, subs));
 
+
+        //Return a new DStream by applying a function to all elements of this DStream, and then flattening the results
         JavaDStream<String> message = msgs.flatMap((FlatMapFunction<byte[], String>) (byte[] msg) -> {
             return Arrays.asList(new String(msg)).iterator();
             //return 10;
@@ -50,7 +55,7 @@ public class Consumer {
 //
 //        numOfPulsar.print();
 
-
+            //Create a Row from the given arguments. Position i in the argument list becomes position i in the created Row object.
             message.foreachRDD((VoidFunction<JavaRDD<String>>) rdd -> {
             JavaRDD<Row> rowRDD = rdd.map((Function<String, Row>) msg -> {
                 Row row =  RowFactory.create(msg);
@@ -58,6 +63,7 @@ public class Consumer {
             });
 
             //Create Schema
+            //Creates a StructType with the given list of StructFields (fields).
             StructType schema = DataTypes.createStructType(new StructField[] {DataTypes.createStructField("Message", DataTypes.StringType
                     , true)});
 
